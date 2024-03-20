@@ -3,7 +3,7 @@ import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { db } from "~/server/db";
 
-const createNote = createTRPCRouter({
+export const createNote = createTRPCRouter({
     createNote: publicProcedure.input(
         z.object({
             title: z.string(),
@@ -18,5 +18,7 @@ const createNote = createTRPCRouter({
                 content: input.content
             }
         })
+
+        return note
     })
 })
