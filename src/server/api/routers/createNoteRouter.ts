@@ -10,15 +10,21 @@ export const createNote = createTRPCRouter({
             content: z.string()
         })
     ).mutation(async (opts) => {
-        const { input } = opts
+        const { input } = opts;
 
         const note = await db.note.create({
             data: {
                 title: input.title,
                 content: input.content
             }
-        })
+        });
 
-        return note
-    })
+        return note;
+    }),
+    
+    listNotes: publicProcedure.query(async () => {
+        const notes = await db.note.findMany();
+
+        return notes;
+    }) 
 })
