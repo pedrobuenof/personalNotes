@@ -45,4 +45,35 @@ export const personalNote = createTRPCRouter({
 
         return noteDb
     }),
+
+    updateNote: publicProcedure.input(
+        z.object({
+            id: z.number(),
+            title: z.string(),
+            content: z.string()
+        })
+    ).mutation(async (opts) => {
+        try {
+            const { id, title, content } = opts.input;
+    
+            // Validação dos dados
+            const validatedData = {
+                id,
+                title,
+                content
+            };
+    
+            // Atualização da nota no banco de dados
+            const updatedNote = await db.note.update({
+                where: { id },  // Unique identifier for the note
+                data: validatedData
+            });
+    
+            return updatedNote; // Retorne a nota atualizada ou qualquer outra resposta necessária
+    
+        } catch (error) {
+            console.error("Error updating note:", error);
+            throw new Error("Failed to update note");
+        }
+    })
 })
