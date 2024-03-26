@@ -1,25 +1,53 @@
 import { Note } from "@prisma/client";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { number } from "zod";
 import Button from "~/components/button";
 import { api } from "~/utils/api";
 
 export default function editNote(props: any){
 
+    
+    
     // const { noteDb, setNoteDb} = useState()
 
     const router = useRouter()
-    const id = +router.query.id
-
-    // You should use the id here to fetch the specific note
-    const { data, isLoading: dataIsLoading } = api.personalNote.showNoteById.useQuery({id});
-
-    if (dataIsLoading) {
-      return <div>Loading...</div>;
-    }
+    const {id}  = router.query
+    const noteId = parseInt(id as string)
     
-    console.log(data);
+    
+
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [noteData, setNoteData] = useState<Note | null>(null);
+
+    const [currentTitle, setCurrentTitle] = useState<string>('');
+    const [currentContent, setCurrentContent] = useState<string>('');
+
+    const { data: queryData } = api.personalNote.showNoteById.useQuery({ id: noteId});
+
+    useEffect(() => {
+
+      if (queryData) {
+          const { id, title, content, createdAt, updatedAt } = queryData;
+
+          setNoteData({
+              id,
+              title,
+              content,
+              createdAt,
+              updatedAt
+          });
+
+          setCurrentTitle(title);
+          setCurrentContent(content);
+          setIsLoading(false);
+      }
+
+  }, [queryData]);
+
+  if (isLoading) {
+      return <div>Loading...</div>;
+  }
     
     return (
         <>
@@ -40,12 +68,12 @@ export default function editNote(props: any){
                 </div>
                 <div className="flex flex-col">
                   <input type="text" className="bg-blue-500 h-[50px]"
-                    value={data?.title}
-                    // onChange={(e) => setTitle(e.target.value)}
+                    value={currentTitle}
+                    onChange={(e) => setCurrentTitle(e.target.value)}
                   />
                   <textarea className="bg-green-500 resize-none h-[300.5px]"
-                    value={data?.content}
-                    // onChange={(e) => setContent(e.target.value)}
+                    value={currentContent}
+                    onChange={(e) => setCurrentContent(e.target.value)}
                   ></textarea>
                 </div>
               </div>
