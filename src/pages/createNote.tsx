@@ -24,11 +24,11 @@ export default function createNote(){
                   <span>...</span>
                 </div>
                 <div className="flex flex-col">
-                  <input type="text" className="bg-blue-500 h-[50px]"
+                  <input type="text" className="bg-blue-500 h-[50px] pl-3"
                     value={inputTitle}
                     onChange={(e) => setTitle(e.target.value)}
                   />
-                  <textarea className="bg-green-500 resize-none h-[300.5px]"
+                  <textarea className="bg-green-500 resize-none h-[300.5px] pl-3"
                     value={inputContent}
                     onChange={(e) => setContent(e.target.value)}
                   ></textarea>

@@ -23,7 +23,7 @@ export default function editNote(props: any){
     const [currentTitle, setCurrentTitle] = useState<string>('');
     const [currentContent, setCurrentContent] = useState<string>('');
 
-    const { data: queryData } = api.personalNote.showNoteById.useQuery({ id: noteId});
+    const { data: queryNoteById } = api.personalNote.showNoteById.useQuery({ id: noteId});
 
     const {data: updateData, mutate: updateNote} = api.personalNote.updateNote.useMutation()
 
@@ -44,8 +44,8 @@ export default function editNote(props: any){
 
     useEffect(() => {
 
-      if (queryData) {
-          const { id, title, content, createdAt, updatedAt } = queryData;
+      if (queryNoteById) {
+          const { id, title, content, createdAt, updatedAt } = queryNoteById;
 
           setNoteData({
               id,
@@ -60,7 +60,7 @@ export default function editNote(props: any){
           setIsLoading(false);
       }
 
-  }, [queryData]);
+  }, [queryNoteById]);
 
   if (isLoading) {
       return <div>Loading...</div>;
@@ -81,11 +81,11 @@ export default function editNote(props: any){
                   <span>...</span>
                 </div>
                 <div className="flex flex-col">
-                  <input type="text" className="bg-blue-500 h-[50px]"
+                  <input type="text" className="bg-blue-500 h-[50px] pl-3"
                     value={currentTitle}
                     onChange={(e) => setCurrentTitle(e.target.value)}
                   />
-                  <textarea className="bg-green-500 resize-none h-[300.5px]"
+                  <textarea className="bg-green-500 resize-none h-[300.5px] pl-3"
                     value={currentContent}
                     onChange={(e) => setCurrentContent(e.target.value)}
                   ></textarea>
