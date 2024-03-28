@@ -66,7 +66,12 @@ export default function editNote(props: any){
       return <div>Loading...</div>;
   }
 
-  
+  function handleDeleteRoute(id:number, title:any){
+    router.push({
+      pathname: `/deleteNote/${id}/${title}`
+    })
+  }
+  const titlePassOtherRouter = noteData.title
   
     return (
         <>
@@ -78,7 +83,7 @@ export default function editNote(props: any){
                     value="Edit the note" className="bg-gray-500 border-2 w-48"
                   />
 
-                  <span>...</span>
+                  <span onClick={() => handleDeleteRoute(noteId,titlePassOtherRouter)}>...</span>
                 </div>
                 <div className="flex flex-col">
                   <input type="text" className="bg-blue-500 h-[50px] pl-3"
