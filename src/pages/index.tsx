@@ -1,3 +1,4 @@
+import { Note } from "@prisma/client";
 import { log } from "console";
 import { Url } from "next/dist/shared/lib/router/router";
 import Head from "next/head";
@@ -10,52 +11,22 @@ import Button from "~/components/button";
 import { api } from "~/utils/api";
 
 export default function Home() {
-  
-  const [haveData, setHaveData] = useState<String[]>([])
 
   const router = useRouter()
+
+  const [allNotesByDb, setAllNotesByDb] = useState<Note[]>([])
+  const { data: notesData, isLoading, isSuccess} = api.personalNote.listNotes.useQuery()
   
-  const { data: notesData, isLoading} = api.personalNote.listNotes.useQuery()
-
-  useEffect(() => {
-    // Verifica se estamos no ambiente do navegador antes de usar localStorage
-    if (typeof window !== 'undefined') {
-      console.log('oi');
-      
-      const arrayNotesLocalStorage: String[] = []
-
-      notesData?.forEach(note => {
-        // let noteJson = {id: note.id, title: note.title, content: note.content}
-        let titleLocalStorage = note.title
-        localStorage.setItem(titleLocalStorage, JSON.stringify(note));
-
-        let dataLocalStorage = localStorage.getItem(titleLocalStorage);
-        if (dataLocalStorage) {
-          arrayNotesLocalStorage.push(dataLocalStorage);
-        }
-      });
-
-      setHaveData(arrayNotesLocalStorage); // Atualiza o estado haveData
+  useEffect(()=>{ 
+    if (isSuccess) {
+      setAllNotesByDb(notesData)
     }
-  }, [notesData]); 
 
-  useEffect(() => {
-    // Aqui, haveData será atualizado com os dados de localStorage
-    if (haveData) {
-      console.log('Há dados no localStorage:', haveData);
-    } else {
-      console.log('Não há dados no localStorage');
-    }
-  }, [haveData]); // Executa sempre que haveData for alterado
+  }, [notesData])
 
-  const handleNavegacao = (route: any) => {
-
-
-    router.push(route);
+  const handleNavegacao = () => {
+    router.push('/createNote');
   };
-
-  if (isLoading) return <p>loading...</p>;
-
   return (
     <>
       <Head>
@@ -67,7 +38,7 @@ export default function Home() {
         
           {
             
-            !haveData ? (
+            allNotesByDb.length == 0 ? (
               <>
                 <div id="all_Content" className="flex flex-col justify-center items-center h-full w-full bg-blue-500">
                   <div>
@@ -86,11 +57,11 @@ export default function Home() {
       
                   <div id="side_Menu" className="w-3/3 bg-white flex flex-col justify-center items-end">
                     <ul>
-                      {notesData?.map((note) => (
+                      {allNotesByDb.map((note) => (
                         <ItemNoteOfListShowNotes id={note.id} title={note.title} content={note.content}/>
                       ))}
                     </ul>
-                    <Button onClick={() => handleNavegacao('/createNote')} value="Write a new note" className="bg-gray-500 border-2 w-48 mt-2"/>                
+                    <Button onClick={handleNavegacao} value="Write a new note" className="bg-gray-500 border-2 w-48 mt-2"/>                
                   </div>
                 </div>
               </div>           

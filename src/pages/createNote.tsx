@@ -1,12 +1,20 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { api } from "~/utils/api";
 import Button from "~/components/button";
 
 export default function createNote(){
 
-    const [inputTitle, setTitle] = useState<string>('')
-    const [inputContent, setContent] = useState<string>('')
-    const { mutate: noteDB } = api.personalNote.createNote.useMutation();
+  const [inputTitle, setTitle] = useState<string>('')
+  const [inputContent, setContent] = useState<string>('')
+  const { data: saveNote, mutate: noteDB, isSuccess} = api.personalNote.createNote.useMutation();
+
+  useEffect(() => {
+    if (isSuccess) {
+      console.log(saveNote)
+      alert('nota salva com sucesso!')
+    }
+  }, [saveNote])
+
     return (
         <>
             <div id="space_Write_Note" className="flex flex-col w-screen h-screen bg-blue-100">
