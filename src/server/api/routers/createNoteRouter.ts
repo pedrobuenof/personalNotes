@@ -75,5 +75,24 @@ export const personalNote = createTRPCRouter({
             console.error("Error updating note:", error);
             throw new Error("Failed to update note");
         }
+    }),
+
+    deleteNote: publicProcedure.input(
+        z.object({
+            id: z.number()
+        })
+    ).mutation(async(opts) => {
+        try {
+            const {id} = opts.input
+
+            const data = await db.note.delete({
+                where: {id}
+            })
+
+            return data
+        } catch (error) {
+            console.error("Error deleting note:", error);
+            throw new Error("Failed to delete note");
+        }
     })
 })
