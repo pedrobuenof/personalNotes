@@ -20,9 +20,9 @@ export default function editNote(props: any){
 
     const { data: dbQueryNoteById, isSuccess: querySuccess } = api.personalNote.showNoteById.useQuery({ id: noteId});
 
-    const {data: updateData, mutate: updateNote} = api.personalNote.updateNote.useMutation()
+    const {mutate: updateNote} = api.personalNote.updateNote.useMutation()
 
-    const {data: retornoDeleteNote, mutate: deleteNote, isSuccess: deleteSuccess} = api.personalNote.deleteNote.useMutation()
+    const {mutate: deleteNote, isSuccess: deleteSuccess} = api.personalNote.deleteNote.useMutation()
 
     
 
@@ -59,7 +59,7 @@ export default function editNote(props: any){
                 <div id="save_Or_Delete">
                   <Button
                     onClick={handleUpdateNote} 
-                    value="Edit the note" className="bg-gray-500 border-2 w-48"
+                    value="Save edition" className="bg-gray-500 border-2 w-48"
                   />
 
                   <span onClick={() => {
@@ -69,7 +69,7 @@ export default function editNote(props: any){
                   }}>...</span>
                 </div>
                 <div className="flex flex-col">
-                  <input type="text" className="bg-blue-500 h-[50px] pl-3"
+                  <input type="text" className="bg-blue-500 h-[50px] text-xl pl-3"
                     value={currentTitle}
                     onChange={(e) => setCurrentTitle(e.target.value)}
                   />
