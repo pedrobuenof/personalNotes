@@ -52,30 +52,48 @@ export default function editNote(props: any){
     });
   };
   
+  const backToListAllNotes = () => {
+    router.push('/')
+  }
     return (
         <>
-            <div id="space_Write_Note" className="flex flex-col w-screen h-screen bg-blue-100">
-              <div className=" m-3">
-                <div id="save_Or_Delete">
+            <div id="space_Write_Note" className="flex flex-col w-screen h-screen bg-[#E5E1DA] p-3">
+              <div className="flex flex-col justify-center items-center ">
+                <div id="save_Or_Delete" className="flex justify-between w-full px-2">
                   <Button
-                    onClick={handleUpdateNote} 
-                    value="Save edition" className="bg-gray-500 border-2 w-48"
+                    onClick={backToListAllNotes}
+                    value="All notes"
                   />
+                  
+                  <div>
+                    <span
+                      onClick={() => {
+                        deleteNote({
+                          id: noteId
+                        })
+                      }}
+                      className="mr-3"
+                    >...</span>
+                    
+                    <Button
+                      onClick={handleUpdateNote} 
+                      value="Save edition"
+                    />
 
-                  <span onClick={() => {
-                    deleteNote({
-                      id: noteId
-                    })
-                  }}>...</span>
+                  </div>
                 </div>
-                <div className="flex flex-col">
-                  <input type="text" className="bg-blue-500 h-[50px] text-xl pl-3"
+                <div className="flex flex-col h-auto rounded-md p-1 bg-white w-full">
+                  <input type="text" className="text-xl h-[50px] pl-3 border-b-2"
                     value={currentTitle}
                     onChange={(e) => setCurrentTitle(e.target.value)}
                   />
-                  <textarea className="bg-green-500 resize-none h-[300.5px] pl-3"
+                  <textarea className="resize-none h-auto min-h-[300px] max-h-[630px] py-3 pl-3 pr-2"
                     value={currentContent}
-                    onChange={(e) => setCurrentContent(e.target.value)}
+                    onChange={(e) => {
+                      setCurrentContent(e.target.value)
+                      e.target.style.height = 'auto';
+                      e.target.style.height = (e.target.scrollHeight) + 'px';
+                    } }
                   ></textarea>
                 </div>
               </div>
