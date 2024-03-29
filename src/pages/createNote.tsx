@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react"
 import { api } from "~/utils/api";
 import Button from "~/components/button";
+import { useRouter } from "next/router";
 
 export default function createNote(){
+  const router = useRouter()
 
   const [inputTitle, setTitle] = useState<string>('')
   const [inputContent, setContent] = useState<string>('')
@@ -12,6 +14,7 @@ export default function createNote(){
     if (isSuccess) {
       console.log(saveNote)
       alert('nota salva com sucesso!')
+      router.push(`/editNote/${saveNote.id}`)
     }
   }, [saveNote])
 
@@ -28,11 +31,9 @@ export default function createNote(){
                       })
                     }} value="Save the note" className="bg-gray-500 border-2 w-48"
                   />
-
-                  <span>...</span>
                 </div>
                 <div className="flex flex-col">
-                  <input type="text" className="bg-blue-500 h-[50px] pl-3"
+                  <input type="text" className="bg-blue-500 text-xl h-[50px] pl-3"
                     value={inputTitle}
                     onChange={(e) => setTitle(e.target.value)}
                   />
