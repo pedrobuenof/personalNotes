@@ -12,13 +12,13 @@ export default function ItemNoteOfListShowNotes (props: any){
     }
     return (
         <>   
-            <li className="bg-red-500" onClick={() => handleEditNote(props.id)}>
-                <div id="DB_Note" className="flex justify-between h-14 leading-6 overflow-hidden mx-2">
-                    <div className="flex flex-col mt-1">
-                        <p id="title_Note">{props.title}</p>
-                        <p id="content_Note" className=" text-xs leading-5 mt-1">{props.content}</p>
+            <li className="w-full bg-[#FBF9F1]" onClick={() => handleEditNote(props.id)}>
+                <div id="DB_Note" className="w-full flex justify-between h-14">
+                    <div className="flex flex-col justify-around overflow-hidden px-2 py-1">
+                        <p id="title_Note" className=" whitespace-nowrap overflow-hidden text-lg ">{props.title}</p>
+                        <p id="content_Note" className=" text-xs overflow-hidden ">{props.content}</p>
                     </div>
-                    <span>...</span>
+                    <span className="">...</span>
                 </div>
             </li><hr></hr>
         </>
