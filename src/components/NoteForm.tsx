@@ -84,8 +84,10 @@ export default function NoteForm(props: NoteFormProps) {
     }
     return (
         <>
-            <div id="space_Write_Note" className="flex flex-col w-screen h-screen bg-[#E5E1DA] p-3">
-                <div className="flex flex-col justify-center items-center ">
+            <div id="space_Write_Note" className="flex flex-col justify-start items-center w-screen h-screen bg-[#E5E1DA] p-3">
+                <div className="flex flex-col justify-center items-center
+                                sm:w-[400px]
+                                lg:w-[700px] lg:p-3">
                     <div id="save_Or_Delete" className="flex justify-between w-full px-2">
                         <Button onClick={backToListAllNotes} value="All notes" />
                         {isNewNote ? (

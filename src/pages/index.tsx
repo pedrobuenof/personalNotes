@@ -45,22 +45,36 @@ export default function Home() {
             
             allNotesByDb.length == 0 ? (
               <>
-                <div id="all_Content" className="flex flex-col justify-center items-center h-full w-full bg-blue-500">
+                <div id="all_Content" className="flex flex-col justify-center items-center h-full w-full bg-[#E5E1DA] px-1">
                   <div>
-                    <h1 className="bg-green-500">You don't have any note</h1>
-                    <Button onClick={handleNavegacao} value="Write a new note" className="bg-gray-500 border-2 w-48 mt-2"/>
+                    <div className="h-16 bg-white flex justify-center items-center rounded-md p-2">
+                      <h1 className="text-2xl">You don't have any note</h1>
+                    </div>
+                    <Button onClick={handleNavegacao} value="Write a new note" className="bg-[#92C7CF] w-full mt-2 p-3 rounded-md"/>
                   </div>
                 </div>
               </>
             ) : (
             <>
               <div id="container" className="flex justify-center items-start h-full w-full bg-[#E5E1DA]">
-                <div id="all_Content" className="flex flex-col justify-between mt-8 max-w-80 w-80 max-h-[678px]">
+                <div id="all_Content" 
+                      className="flex flex-col justify-between mt-8 max-w-80 w-80 max-h-[598px] 
+                                  sm:max-w-[400px] sm:w-[400px] sm:max-h-[750px]
+                                  lg:max-w-[700px] lg:w-[700px] lg:max-h-[1500px]"
+                >
                   <h1 className="mb-3 text-center text-2xl">Personal Notes</h1>
 
-                  <div id="side_Menu" className="w-full flex flex-col justify-center items-center max-h-[638px] h-full">
+                  <div id="side_Menu"
+                        className="w-full flex flex-col justify-center items-center max-h-[588px] h-full
+                                    sm:max-h-[1000px]
+                                    lg:max-h-[1500px]"
+                                    
+                  >
                     <div className="w-full flex justify-center items-start h-full">
-                      <ul className="w-full h-full  p-1 rounded-md bg-[#FBF9F1] max-h-[578px] overflow-scroll">
+                      <ul className="w-full p-1 rounded-md bg-[#FBF9F1] max-h-[530px] overflow-y-scroll
+                                      sm:max-h-[850px]
+                                      lg:max-h-[750px] lg:overflow-scroll"
+                      >
                         {allNotesByDb.map((note) => (
                           <ItemNoteOfListShowNotes id={note.id} title={note.title} content={note.content}/>
                         ))}
