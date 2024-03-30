@@ -1,13 +1,30 @@
-import Link from "next/link"
 import { useRouter } from "next/router"
+import { useEffect } from "react"
+import { api } from "~/utils/api"
+import Button from "./button"
 
 export default function ItemNoteOfListShowNotes (props: any){
 
     const router = useRouter()
 
+    const {mutate: deleteNoteMutation, isSuccess: deleteSuccess} = api.personalNote.deleteNote.useMutation()
+
+    useEffect(() => {
+        if (deleteSuccess) {
+            alert('Nota deletada!');
+            window.location.href = window.location.href;;
+        }
+    }, [deleteSuccess]);
+
     function handleEditNote(id: number){
         router.push({
             pathname: `/editNote/${id}`
+        })
+    }
+
+    function handleDelete(){
+        deleteNoteMutation({
+            id: props.id
         })
     }
     return (
@@ -18,7 +35,7 @@ export default function ItemNoteOfListShowNotes (props: any){
                         <p id="title_Note" className=" whitespace-nowrap overflow-hidden text-lg ">{props.title}</p>
                         <p id="content_Note" className=" text-xs overflow-hidden ">{props.content}</p>
                     </div>
-                    <span className="">...</span>
+                    <Button onClick={() => handleDelete()} value="..."/>
                 </div>
             </li><hr></hr>
         </>
