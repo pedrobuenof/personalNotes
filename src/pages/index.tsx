@@ -14,13 +14,9 @@ export default function Home() {
   const [allNotes, setAllNotes] = useState<Note[] | undefined>([])
   
   const { data: notesData, isLoading, isSuccess} = api.personalNote.listNotes.useQuery()
-  
-  console.log("Antes da requisição dar sucesso");
 
   useEffect(()=>{ 
-    console.log("dentro do effect antes de dar sucesso")
     if (isSuccess) {
-      console.log("deu sucesso");
       setAllNotes(notesData)
     }
 
