@@ -1,12 +1,9 @@
 import { Note } from "@prisma/client";
-import { log } from "console";
-import { Url } from "next/dist/shared/lib/router/router";
 import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import ItemNoteOfListShowNotes from "~/components/blimblom";
 import Button from "~/components/button";
+import ANote from "~/components/ItemOfArrayNotes"
 
 import { api } from "~/utils/api";
 
@@ -14,22 +11,22 @@ export default function Home() {
 
   const router = useRouter()
 
-  const [allNotesByDb, setAllNotesByDb] = useState<Note[]>([])
+  const [allNotes, setAllNotes] = useState<Note[] | undefined>([])
+  
   const { data: notesData, isLoading, isSuccess} = api.personalNote.listNotes.useQuery()
   
   console.log("Antes da requisição dar sucesso");
-  
+
   useEffect(()=>{ 
     console.log("dentro do effect antes de dar sucesso")
     if (isSuccess) {
       console.log("deu sucesso");
-      
-      setAllNotesByDb(notesData)
+      setAllNotes(notesData)
     }
 
   }, [notesData])
 
-  const handleNavegacao = () => {
+  const goToPageCreateNotes = () => {
     router.push('/createNote');
   };
   return (
@@ -43,14 +40,14 @@ export default function Home() {
         
           {
             
-            allNotesByDb.length == 0 ? (
+            allNotes?.length == 0 ? (
               <>
                 <div id="all_Content" className="flex flex-col justify-center items-center h-full w-full bg-[#E5E1DA] px-1">
                   <div>
                     <div className="h-16 bg-white flex justify-center items-center rounded-md p-2">
                       <h1 className="text-2xl">You don't have any note</h1>
                     </div>
-                    <Button onClick={handleNavegacao} value="Write a new note" className="bg-[#92C7CF] w-full mt-2 p-3 rounded-md"/>
+                    <Button onClick={goToPageCreateNotes} value="Write a new note" className="bg-[#92C7CF] w-full mt-2 p-3 rounded-md"/>
                   </div>
                 </div>
               </>
@@ -75,12 +72,12 @@ export default function Home() {
                                       sm:max-h-[850px]
                                       lg:max-h-[750px] lg:overflow-scroll"
                       >
-                        {allNotesByDb.map((note) => (
-                          <ItemNoteOfListShowNotes id={note.id} title={note.title} content={note.content}/>
+                        {allNotes?.map((note) => (
+                          <ANote key={note.id} id={note.id} title={note.title} content={note.content}/>
                         ))}
                       </ul>
                     </div>
-                    <Button onClick={handleNavegacao} value="Write a new note" className="bg-[#92C7CF] w-full mt-2 p-3 rounded-md"/>                
+                    <Button onClick={goToPageCreateNotes} value="Write a new note" className="bg-[#92C7CF] w-full mt-2 p-3 rounded-md"/>                
                   </div>
                 </div>
               </div>           
