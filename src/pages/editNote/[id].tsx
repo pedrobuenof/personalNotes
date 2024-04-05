@@ -7,10 +7,12 @@ export default function editNote(props: any){
     const {id}  = router.query
     const noteId = parseInt(id as string)
 
-    const { data: dbQueryNoteById, isSuccess: querySuccess } = api.personalNote.showNoteById.useQuery({ id: noteId});
+    const { data: resultQueryNoteById, isSuccess: querySuccess } = api.personalNote.showNoteById.useQuery({ id: noteId});
+
+    
     return (
         <>
-          {dbQueryNoteById ? <NoteForm isNewNote={false} initialNote={dbQueryNoteById}/> : console.log("Não achou a nota pelo id")}  
+          {resultQueryNoteById ? <NoteForm isNewNote={false} initialNote={resultQueryNoteById}/> : <h1>Não achou a nota pelo id. Tente novamente!</h1>}  
         </>
     )
 }
