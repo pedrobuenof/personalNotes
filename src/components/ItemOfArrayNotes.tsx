@@ -3,7 +3,7 @@ import { useEffect } from "react"
 import { api } from "~/utils/api"
 import Button from "./button"
 
-export default function ItemNoteOfListShowNotes (props: any){
+export default function ANote (props: any){
 
     const router = useRouter()
 
@@ -12,17 +12,17 @@ export default function ItemNoteOfListShowNotes (props: any){
     useEffect(() => {
         if (deleteSuccess) {
             alert('Nota deletada!');
-            window.location.href = window.location.href;;
+            window.location.href = window.location.href;
         }
     }, [deleteSuccess]);
-
-    function handleEditNote(id: number){
+   
+    function goToPageEditNote(id: number){
         router.push({
             pathname: `/editNote/${id}`
         })
     }
 
-    function handleDelete(){
+    function handleWithDelete(){
         deleteNoteMutation({
             id: props.id
         })
@@ -31,11 +31,11 @@ export default function ItemNoteOfListShowNotes (props: any){
         <>   
             <li className="w-full bg-[#FBF9F1] cursor-pointer" >
                 <div id="DB_Note" className="w-full flex justify-between h-14">
-                    <div className="flex flex-col justify-around w-full overflow-hidden px-2 py-1" onClick={() => handleEditNote(props.id)}>
+                    <div className="flex flex-col justify-around w-full overflow-hidden px-2 py-1" onClick={() => goToPageEditNote(props.id)}>
                         <p id="title_Note" className=" whitespace-nowrap overflow-hidden text-lg ">{props.title}</p>
                         <p id="content_Note" className=" text-xs overflow-hidden ">{props.content}</p>
                     </div>
-                    <Button onClick={() => handleDelete()} value="..."/>
+                    <Button onClick={() => handleWithDelete()} value="..."/>
                 </div>
             </li><hr></hr>
         </>

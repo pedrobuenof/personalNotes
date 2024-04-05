@@ -1,4 +1,4 @@
-import { personalNote } from "~/server/api/routers/createNoteRouter";
+import { personalNote } from "~/server/api/routers/personalNotesRouter";
 import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
 
 /**
